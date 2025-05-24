@@ -1,2 +1,2 @@
-const API_ENDPOINT = "http://142.93.0.131";
+const API_ENDPOINT = "https://thenazarenejonahsalumni.live";
 export default API_ENDPOINT;
