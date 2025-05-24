@@ -5,11 +5,21 @@ import axios from "axios";
 import API_ENDPOINT from "@/api_config";
 import Image from "next/image";
 
+// Define the image type
+interface ProjectImage {
+  id: number;
+  image: string;
+  caption?: string;
+  project?: {
+    id: number;
+  };
+}
+
 const Gallery = () => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<ProjectImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<ProjectImage | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const imagesPerPage = 9;
 
@@ -43,7 +53,7 @@ const Gallery = () => {
   const totalPages = Math.ceil(images.length / imagesPerPage);
 
   // Group images in rows of 3 for desktop view
-  const imageRows = [];
+  const imageRows: ProjectImage[][] = [];
   for (let i = 0; i < currentImages.length; i += 3) {
     imageRows.push(currentImages.slice(i, i + 3));
   }
@@ -62,7 +72,7 @@ const Gallery = () => {
     }
   };
 
-  const openModal = (image) => {
+  const openModal = (image: ProjectImage) => {
     setSelectedImage(image);
     document.body.style.overflow = 'hidden';
   };

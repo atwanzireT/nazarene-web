@@ -8,6 +8,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import API_ENDPOINT from "@/api_config";
+import { AxiosError } from "axios";
 import { 
   Eye, 
   EyeOff, 
@@ -27,7 +28,7 @@ const LoginScreen = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     // Validate form
@@ -54,10 +55,10 @@ const LoginScreen = () => {
 
       const { access, refresh } = response.data;
 
-      // Store tokens in cookies
+      // Store tokens in cookies with proper typing
       const cookieOptions = {
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'strict' as const,
       };
 
       // Set access token (short-lived)
@@ -76,16 +77,17 @@ const LoginScreen = () => {
       router.push('/');
       
     } catch (err) {
-      console.error('Login error:', err);
-      if (err.message === "API endpoint is not configured") {
+      const error = err as AxiosError;
+      console.error('Login error:', error);
+      if (error.message === "API endpoint is not configured") {
         setError("System configuration error. Please contact support.");
-      } else if (err.response) {
-        if (err.response.status === 401) {
+      } else if (error.response) {
+        if (error.response.status === 401) {
           setError("Invalid email or password. Please try again.");
         } else {
           setError("An error occurred. Please try again later.");
         }
-      } else if (err.request) {
+      } else if (error.request) {
         setError("Network error. Please check your connection.");
       } else {
         setError("An unexpected error occurred.");
@@ -96,7 +98,7 @@ const LoginScreen = () => {
   };
 
   // Animation component replacement (if framer-motion is not available)
-  const MotionDiv = ({ children, className }) => (
+  const MotionDiv = ({ children, className }: { children: React.ReactNode; className?: string }) => (
     <div className={className}>
       {children}
     </div>

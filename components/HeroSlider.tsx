@@ -34,7 +34,7 @@ export default function HeroSlider() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   
   // Handle slide navigation
-  const goToSlide = useCallback((index) => {
+  const goToSlide = useCallback((index: number) => {
     if (isTransitioning) return;
     
     setIsTransitioning(true);

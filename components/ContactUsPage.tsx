@@ -33,15 +33,16 @@ const ContactUsPage = () => {
     message: "",
     category: "general"
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // null, "success", "error"
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  // Update the handleInputChange function with proper event typing
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormState(prev => ({
+          ...prev,
+          [name]: value
+      }));
   };
 
   const handleSubmit = async () => {
@@ -405,7 +406,7 @@ const ContactUsPage = () => {
                       <textarea
                         id="message"
                         name="message"
-                        rows="5"
+                        rows={5}
                         value={formState.message}
                         onChange={handleInputChange}
                         className={clsx(

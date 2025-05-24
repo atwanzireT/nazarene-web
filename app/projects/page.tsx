@@ -45,7 +45,7 @@ const STATUS_CONFIG = {
         color: 'amber',
         action: null
     }
-};
+} as const;
 
 // Default image URL
 const DEFAULT_COVER_IMAGE = '/images/project-default.jpg';
@@ -65,32 +65,37 @@ const stagger = {
 };
 
 // Type definitions
-/**
- * @typedef {Object} Project
- * @property {number} id
- * @property {string} title
- * @property {string} description
- * @property {string} status
- * @property {string} [status_display]
- * @property {number} progress
- * @property {string|null} start_date
- * @property {string|null} end_date
- * @property {string|null} budget
- * @property {string} raised_amount
- * @property {string|null} location
- * @property {string|null} cover_image
- * @property {boolean} is_featured
- * @property {any[]} activities
- * @property {number} duration
- * @property {boolean} is_active
- * @property {string} created
- */
+interface Project {
+    id: number;
+    title: string;
+    description: string;
+    status: keyof typeof STATUS_CONFIG;
+    status_display?: string;
+    progress: number;
+    start_date: string | null;
+    end_date: string | null;
+    budget: string | null;
+    raised_amount: string;
+    location: string | null;
+    cover_image: string | null;
+    is_featured: boolean;
+    activities: unknown | null;
+    is_active: boolean;
+    created: string;
+}
+
+interface ProjectsState {
+    all: Project[];
+    filtered: Project[];
+    loading: boolean;
+    error: string | null;
+}
 
 export default function ProjectsPage() {
     const { darkMode } = useTheme();
-    const [filters, setFilters] = useState(['pending', 'upcoming', 'ongoing']);
-    const [showFilterMenu, setShowFilterMenu] = useState(false);
-    const [projects, setProjects] = useState({
+    const [filters, setFilters] = useState<(keyof typeof STATUS_CONFIG)[]>(['pending', 'upcoming', 'ongoing']);
+    const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
+    const [projects, setProjects] = useState<ProjectsState>({
         all: [],
         filtered: [],
         loading: true,
@@ -98,7 +103,7 @@ export default function ProjectsPage() {
     });
 
     // Filter projects function
-    const filterProjects = useCallback((allProjects, currentFilters) => {
+    const filterProjects = useCallback((allProjects: Project[], currentFilters: (keyof typeof STATUS_CONFIG)[]) => {
         return allProjects.filter(project => currentFilters.includes(project.status));
     }, []);
 
@@ -107,7 +112,7 @@ export default function ProjectsPage() {
         const fetchProjects = async () => {
             try {
                 const response = await axios.get(`${API_ENDPOINT}/api/projects/`);
-                const allProjects = response.data;
+                const allProjects: Project[] = response.data;
 
                 setProjects(prev => ({
                     ...prev,
@@ -140,7 +145,7 @@ export default function ProjectsPage() {
     }, [filters, projects.all.length, filterProjects]);
 
     // Helper functions
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string | null): string => {
         if (!dateString) return "Not scheduled";
         try {
             return new Date(dateString).toLocaleDateString('en-US', {
@@ -153,17 +158,17 @@ export default function ProjectsPage() {
         }
     };
 
-    const calculateDaysRemaining = (endDate) => {
+    const calculateDaysRemaining = (endDate: string | null): number | null => {
         if (!endDate) return null;
         try {
-            const diff = new Date(endDate) - new Date();
+            const diff = new Date(endDate).getTime() - new Date().getTime();
             return Math.ceil(diff / (1000 * 60 * 60 * 24));
-        } catch{
+        } catch {
             return null;
         }
     };
 
-    const formatCurrency = (amount) => {
+    const formatCurrency = (amount: string): string => {
         if (!amount) return "UGX 0";
         try {
             return new Intl.NumberFormat('en-US', {
@@ -172,12 +177,12 @@ export default function ProjectsPage() {
                 maximumFractionDigits: 0
             }).format(parseFloat(amount));
         } catch {
-            return "KES 0";
+            return "UGX 0";
         }
     };
 
     // Filter functions
-    const toggleFilter = (status) => {
+    const toggleFilter = (status: keyof typeof STATUS_CONFIG) => {
         setFilters(prev =>
             prev.includes(status)
                 ? prev.filter(f => f !== status)
@@ -185,13 +190,13 @@ export default function ProjectsPage() {
         );
     };
 
-    const setPresetFilters = (presetFilters) => {
+    const setPresetFilters = (presetFilters: (keyof typeof STATUS_CONFIG)[]) => {
         setFilters(presetFilters);
         document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     // UI helper functions
-    const getStatusInfo = (project) => {
+    const getStatusInfo = (project: Project) => {
         const status = project.status;
         const config = STATUS_CONFIG[status] || { label: status, color: 'gray', action: null };
 
@@ -203,7 +208,7 @@ export default function ProjectsPage() {
     };
 
     // Component rendering functions
-    const renderActionButton = (project) => {
+    const renderActionButton = (project: Project) => {
         const { status } = project;
         const { action } = getStatusInfo(project);
 
@@ -252,7 +257,6 @@ export default function ProjectsPage() {
     };
 
     // Loading and error states
-
     if (projects.loading) {
         return (
             <div className={clsx(
@@ -418,8 +422,8 @@ export default function ProjectsPage() {
                                                     <input
                                                         type="checkbox"
                                                         id={`status-${key}`}
-                                                        checked={filters.includes(key)}
-                                                        onChange={() => toggleFilter(key)}
+                                                        checked={filters.includes(key as keyof typeof STATUS_CONFIG)}
+                                                        onChange={() => toggleFilter(key as keyof typeof STATUS_CONFIG)}
                                                         className="mr-2 rounded"
                                                     />
                                                     <label htmlFor={`status-${key}`} className="text-sm">
@@ -440,7 +444,7 @@ export default function ProjectsPage() {
                                             Clear All
                                         </button>
                                         <button
-                                            onClick={() => setFilters(Object.keys(STATUS_CONFIG))}
+                                            onClick={() => setFilters(Object.keys(STATUS_CONFIG) as (keyof typeof STATUS_CONFIG)[])}
                                             className={clsx(
                                                 "text-xs px-2 py-1 rounded",
                                                 darkMode ? "text-green-400 hover:text-green-300" : "text-green-800 hover:text-green-950"
@@ -560,7 +564,7 @@ export default function ProjectsPage() {
                                                                     <>
                                                                         <br />
                                                                         Ends: {formatDate(project.end_date)}
-                                                                        {daysRemaining > 0 && (
+                                                                        {daysRemaining && daysRemaining > 0 && (
                                                                             <span className="font-medium">
                                                                                 {' '}({daysRemaining} days left)
                                                                             </span>
@@ -604,8 +608,8 @@ export default function ProjectsPage() {
                                                                 style={{ width: `${project.progress}%` }}
                                                                 role="progressbar"
                                                                 aria-valuenow={project.progress}
-                                                                aria-valuemin="0"
-                                                                aria-valuemax="100"
+                                                                aria-valuemin={0}
+                                                                aria-valuemax={100}
                                                             ></div>
                                                         </div>
                                                         {project.budget && (
@@ -645,7 +649,7 @@ export default function ProjectsPage() {
                             <p className="text-xl mb-4">No projects found with the selected filters</p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <button
-                                    onClick={() => setFilters(Object.keys(STATUS_CONFIG))}
+                                    onClick={() => setFilters(Object.keys(STATUS_CONFIG) as (keyof typeof STATUS_CONFIG)[])}
                                     className="px-4 py-2 rounded-lg font-medium bg-green-600 text-white"
                                 >
                                     Show All Projects
