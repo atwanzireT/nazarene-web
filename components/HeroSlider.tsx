@@ -6,22 +6,22 @@ import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
 import clsx from "clsx";
 
-// Sample slider images - replace with your actual images
+// Sample slider images - make sure these images exist in your public folder
 const sliderImages = [
   {
-    url: "/images/hero1.jpg",
+    url: "/hero1.JPG", // Changed from /images/hero1.jpg
     alt: "Hero Image 1",
     title: "Stay Connected",
     subtitle: "Maintain relationships with the alumni and school as a whole"
   },
   {
-    url: "/images/hero2.jpg",
+    url: "/hero2.JPG", // Changed from /images/hero2.jpg
     alt: "Hero Image 2",
     title: "Career Support",
     subtitle: "Support our very own in career paths"
   },
   {
-    url: "/images/hero3.jpg",
+    url: "/hero3.JPG", // Changed from /images/hero3.jpg
     alt: "Hero Image 3",
     title: "Give Back",
     subtitle: "Extend a hand of fellowship through finance and material support"
@@ -32,6 +32,7 @@ export default function HeroSlider() {
   const { darkMode } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [imageErrors, setImageErrors] = useState(new Set());
   
   // Handle slide navigation
   const goToSlide = useCallback((index: number) => {
@@ -63,7 +64,12 @@ export default function HeroSlider() {
     }, 5000);
     
     return () => clearTimeout(timer);
-  }, [nextSlide]); // Fixed: Added nextSlide to dependency array
+  }, [nextSlide]);
+
+  // Handle image errors
+  const handleImageError = useCallback((index: number) => {
+    setImageErrors(prev => new Set([...prev, index]));
+  }, []);
 
   return (
     <div className="relative w-full h-[600px] overflow-hidden">
@@ -77,15 +83,25 @@ export default function HeroSlider() {
               index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
             )}
           >
-            {/* Image with overlay */}
+            {/* Fallback background if image fails */}
+            {imageErrors.has(index) && (
+              <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-green-800 z-0"></div>
+            )}
+            
+            {/* Image overlay */}
             <div className="absolute inset-0 bg-black/40 z-10"></div>
+            
+            {/* Image */}
             <Image
               src={image.url}
               alt={image.alt}
               fill
               className="object-cover"
               sizes="100vw"
-              priority={index === 0} // Prioritize loading the first image
+              priority={index === 0}
+              onError={() => handleImageError(index)}
+              // Add unoptimized prop if you're having optimization issues
+              // unoptimized
             />
             
             {/* Text content */}
