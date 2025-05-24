@@ -375,7 +375,7 @@ export default function ActivitiesPage() {
                     </div>
                     <div className="h-64 md:h-96 w-full relative">
                         <Image
-                            src="/images/hero1.jpg"
+                            src="/hero1.JPG"
                             alt="Project activities banner"
                             fill
                             priority

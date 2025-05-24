@@ -147,7 +147,7 @@ const LoginScreen = () => {
               <div className="w-full h-full bg-green-800">
                 {/* Added error handling for background image */}
                 <div className="w-full h-full opacity-60 bg-cover bg-center" 
-                     style={{backgroundImage: `url('/images/hero2.JPG')`}}
+                     style={{backgroundImage: `url('/hero2.JPG')`}}
                      role="img"
                      aria-label="Alumni gathering"></div>
               </div>

@@ -37,7 +37,7 @@ export default function EventsPage() {
                     </div>
                     <div className="h-56 md:h-96 w-full relative">
                         <Image
-                            src="/images/hero1.jpg"
+                            src="/hero1.JPG"
                             alt="Alumni projects banner"
                             fill
                             priority
