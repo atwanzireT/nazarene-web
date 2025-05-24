@@ -138,7 +138,7 @@ const ContactUsPage = () => {
             "w-full py-24 md:py-32 bg-cover bg-center relative overflow-hidden",
             darkMode ? "bg-gray-800" : ""
           )}
-          style={{ backgroundImage: "url('/images/hero1.JPG')" }}
+          style={{ backgroundImage: "url('/hero1.JPG')" }}
         >
           {/* Gradient overlay for better text readability */}
           <div className={clsx(
