@@ -38,17 +38,17 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center">
+            <div className="flex items-center">
             <div className="h-10 w-10 bg-green-800 rounded-md flex items-center justify-center">
               <span className="text-white font-bold text-lg">N</span>
             </div>
             <span
               className={clsx(
-                "ml-2 text-xl font-semibold transition-colors duration-300",
-                darkMode ? "text-gray-100" : "text-green-900"
+              "ml-2 text-sm font-semibold transition-colors duration-300",
+              darkMode ? "text-gray-100" : "text-green-900"
               )}
             >
-              The Nazarene
+              The Nazarene <br/> Alumni Association
             </span>
           </div>
 
