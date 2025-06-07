@@ -10,21 +10,21 @@ export default function Page() {
   return (
     <div className={clsx(
       "min-h-screen flex flex-col items-center justify-center px-4 py-12",
-      darkMode 
-        ? "bg-gradient-to-b from-gray-900 to-gray-800" 
+      darkMode
+        ? "bg-gradient-to-b from-gray-900 to-gray-800"
         : "bg-gradient-to-b from-green-50 to-white"
     )}>
       {/* Background overlay */}
-    <div
-      className={clsx(
-        "absolute inset-0 z-0 opacity-20 bg-cover bg-center",
-        darkMode ? "bg-gray-900" : "bg-green-900"
-      )}
-      style={{
-        backgroundImage: `url('/images/hero3.JPG')`,
-      }}
-    ></div>
-      
+      <div
+        className={clsx(
+          "absolute inset-0 z-0 opacity-20 bg-cover bg-center",
+          darkMode ? "bg-gray-900" : "bg-green-900"
+        )}
+        style={{
+          backgroundImage: `url('/images/hero3.JPG')`,
+        }}
+      ></div>
+
       <div className="max-w-4xl w-full z-10">
         {/* Header */}
         <div className="text-center mb-8">
@@ -32,7 +32,7 @@ export default function Page() {
             "text-4xl md:text-5xl font-bold mb-2",
             darkMode ? "text-green-400" : "text-green-800"
           )}>
-            The Nazarene Registration
+            THE NAZARENE MEMBERSHIP FORM
           </h1>
           <p className={clsx(
             "text-lg",
@@ -43,16 +43,17 @@ export default function Page() {
         {/* Description card */}
         <div className={clsx(
           "shadow-lg rounded-xl border-l-4 p-8 mb-10",
-          darkMode 
-            ? "bg-gray-800 border-green-500 text-gray-200" 
+          darkMode
+            ? "bg-gray-800 border-green-500 text-gray-200"
             : "bg-white border-green-600 text-gray-700"
         )}>
           <p className={clsx(
             "text-lg mb-6",
             darkMode ? "text-gray-200" : "text-gray-700"
           )}>
-            Welcome to The Nazarene registration process. Please complete all
-            required information to finalize your registration and join our community.
+            By completing this form, you agree to stay updated on all developments related to the association and the school. Be assured that every individual who attended any class at St. Joseph of Nazareth High School, Kavule - Katende is eligible to join the Nazarene Fraternity, but contact will only be made with those who give their
+            consent to be part of the alumni network.
+            Please complete all required information to finalize your registration and join our community.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -60,8 +61,8 @@ export default function Page() {
             <Link
               className={clsx(
                 "inline-flex items-center justify-center rounded-lg text-white py-3 px-8 font-medium transition-colors duration-300 w-full sm:w-auto shadow-md",
-                darkMode 
-                  ? "bg-green-600 hover:bg-green-500" 
+                darkMode
+                  ? "bg-green-600 hover:bg-green-500"
                   : "bg-green-700 hover:bg-green-600"
               )}
               as="https://thenazarenejonahsalumni.live/account-application/create/"
@@ -90,8 +91,8 @@ export default function Page() {
             <Link
               className={clsx(
                 "inline-flex items-center justify-center rounded-lg border-2 py-3 px-6 font-medium transition-colors duration-300 w-full sm:w-auto",
-                darkMode 
-                  ? "border-green-500 text-green-400 hover:bg-gray-700" 
+                darkMode
+                  ? "border-green-500 text-green-400 hover:bg-gray-700"
                   : "border-green-600 text-green-700 hover:bg-green-50"
               )}
               href="#"
@@ -130,8 +131,8 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className={clsx(
               "rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden",
-              darkMode 
-                ? "bg-gray-700 border border-gray-600" 
+              darkMode
+                ? "bg-gray-700 border border-gray-600"
                 : "bg-white border border-green-200"
             )}>
               <div className={clsx(
@@ -140,8 +141,8 @@ export default function Page() {
               )}>
                 <div className={clsx(
                   "inline-flex items-center justify-center w-12 h-12 rounded-full font-bold mb-2 text-xl",
-                  darkMode 
-                    ? "bg-gray-800 text-green-400" 
+                  darkMode
+                    ? "bg-gray-800 text-green-400"
                     : "bg-white text-green-700"
                 )}>
                   1
@@ -161,8 +162,8 @@ export default function Page() {
 
             <div className={clsx(
               "rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden",
-              darkMode 
-                ? "bg-gray-700 border border-gray-600" 
+              darkMode
+                ? "bg-gray-700 border border-gray-600"
                 : "bg-white border border-green-200"
             )}>
               <div className={clsx(
@@ -171,8 +172,8 @@ export default function Page() {
               )}>
                 <div className={clsx(
                   "inline-flex items-center justify-center w-12 h-12 rounded-full font-bold mb-2 text-xl",
-                  darkMode 
-                    ? "bg-gray-800 text-green-400" 
+                  darkMode
+                    ? "bg-gray-800 text-green-400"
                     : "bg-white text-green-700"
                 )}>
                   2
@@ -192,8 +193,8 @@ export default function Page() {
 
             <div className={clsx(
               "rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden",
-              darkMode 
-                ? "bg-gray-700 border border-gray-600" 
+              darkMode
+                ? "bg-gray-700 border border-gray-600"
                 : "bg-white border border-green-200"
             )}>
               <div className={clsx(
@@ -202,8 +203,8 @@ export default function Page() {
               )}>
                 <div className={clsx(
                   "inline-flex items-center justify-center w-12 h-12 rounded-full font-bold mb-2 text-xl",
-                  darkMode 
-                    ? "bg-gray-800 text-green-400" 
+                  darkMode
+                    ? "bg-gray-800 text-green-400"
                     : "bg-white text-green-700"
                 )}>
                   3
@@ -226,16 +227,16 @@ export default function Page() {
         {/* Help section */}
         <div className={clsx(
           "rounded-xl p-6 mb-8",
-          darkMode 
-            ? "bg-gray-700 border border-gray-600" 
+          darkMode
+            ? "bg-gray-700 border border-gray-600"
             : "bg-green-50 border border-green-100"
         )}>
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
             <div className="flex-shrink-0">
               <div className={clsx(
                 "w-12 h-12 rounded-full flex items-center justify-center",
-                darkMode 
-                  ? "bg-gray-800 text-green-400" 
+                darkMode
+                  ? "bg-gray-800 text-green-400"
                   : "bg-green-100 text-green-700"
               )}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -254,8 +255,8 @@ export default function Page() {
               )}>
                 If you have any questions or need help with your registration, our support team is ready to assist you.
               </p>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className={clsx(
                   "font-medium inline-flex items-center hover:underline",
                   darkMode ? "text-green-400" : "text-green-700"
@@ -273,26 +274,26 @@ export default function Page() {
         {/* Footer */}
         <div className={clsx(
           "text-center text-sm pt-4",
-          darkMode 
-            ? "text-gray-400 border-t border-gray-700" 
+          darkMode
+            ? "text-gray-400 border-t border-gray-700"
             : "text-gray-500 border-t border-gray-200"
         )}>
           <p>© {new Date().getFullYear()} The Nazarene. All rights reserved.</p>
           <div className="flex justify-center space-x-4 mt-2">
-            <Link 
-              href="/privacy-policy" 
+            <Link
+              href="/privacy-policy"
               className={clsx(
                 darkMode ? "hover:text-green-400" : "hover:text-green-700"
               )}
             >Privacy Policy</Link>
-            <Link 
-              href="/terms" 
+            <Link
+              href="/terms"
               className={clsx(
                 darkMode ? "hover:text-green-400" : "hover:text-green-700"
               )}
             >Terms of Service</Link>
-            <Link 
-              href="/faq" 
+            <Link
+              href="/faq"
               className={clsx(
                 darkMode ? "hover:text-green-400" : "hover:text-green-700"
               )}

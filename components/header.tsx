@@ -7,6 +7,7 @@ import { useTheme } from "@/context/ThemeContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import Image from "next/image";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,8 +40,14 @@ export default function Header() {
         <div className="flex justify-between h-20">
           {/* Logo */}
             <div className="flex items-center">
-            <div className="h-10 w-10 bg-green-800 rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+            <div className="h-10 w-10 bg-transparent rounded-md flex items-center justify-center">
+              <Image
+                src="/logo.png"
+                alt="Nazarene Alumni Association Logo"
+                width={45}
+                height={45}
+                className="h-12 w-12 object-contain rounded"
+              />
             </div>
             <span
               className={clsx(

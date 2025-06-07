@@ -9,14 +9,15 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import API_ENDPOINT from "@/api_config";
 import { AxiosError } from "axios";
-import { 
-  Eye, 
-  EyeOff, 
-  ArrowRight, 
-  Mail, 
-  Lock, 
-  AlertCircle 
+import {
+  Eye,
+  EyeOff,
+  ArrowRight,
+  Mail,
+  Lock,
+  AlertCircle
 } from "lucide-react";
+import Image from "next/image";
 
 const LoginScreen = () => {
   const { darkMode } = useTheme();
@@ -30,17 +31,17 @@ const LoginScreen = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!email || !password) {
       setError("Please enter both email and password");
       return;
     }
-    
+
     // Reset error state
     setError("");
     setIsLoading(true);
-    
+
     try {
       // Check if API_ENDPOINT is defined
       if (!API_ENDPOINT) {
@@ -75,7 +76,7 @@ const LoginScreen = () => {
 
       // Redirect to dashboard or home page
       router.push('/');
-      
+
     } catch (err) {
       const error = err as AxiosError;
       console.error('Login error:', error);
@@ -115,19 +116,25 @@ const LoginScreen = () => {
           <div className="flex items-center justify-center">
             <div className="w-12 h-12 relative">
               {/* Logo */}
-              <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-xl" aria-label="Logo">
-                N
+              <div className="h-10 w-10 bg-transparent rounded-md flex items-center justify-center">
+                <Image
+                  src="/logo.png"
+                  alt="Nazarene Alumni Association Logo"
+                  width={45}
+                  height={45}
+                  className="h-12 w-12 object-contain rounded"
+                />
               </div>
             </div>
             <span className="ml-3 text-xl font-bold">The Nazarene Alumni Association</span>
           </div>
         </Link>
       </div>
-      
+
       {/* Login Container */}
       <div className="flex-1 flex w-full max-w-6xl px-4 py-12">
         {/* Left Side - Hero Image */}
-        <MotionDiv 
+        <MotionDiv
           className="hidden lg:block w-1/2 pr-12"
         >
           <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl">
@@ -146,17 +153,17 @@ const LoginScreen = () => {
               {/* Fixed: Using relative path for background image */}
               <div className="w-full h-full bg-green-800">
                 {/* Added error handling for background image */}
-                <div className="w-full h-full opacity-60 bg-cover bg-center" 
-                     style={{backgroundImage: `url('/hero2.JPG')`}}
-                     role="img"
-                     aria-label="Alumni gathering"></div>
+                <div className="w-full h-full opacity-60 bg-cover bg-center"
+                  style={{ backgroundImage: `url('/hero2.JPG')` }}
+                  role="img"
+                  aria-label="Alumni gathering"></div>
               </div>
             </div>
           </div>
         </MotionDiv>
-        
+
         {/* Right Side - Login Form */}
-        <MotionDiv 
+        <MotionDiv
           className="w-full lg:w-1/2 flex items-center justify-center lg:pl-12"
         >
           <div className={clsx(
@@ -172,19 +179,19 @@ const LoginScreen = () => {
                 Enter your credentials to access your account
               </p>
             </div>
-            
+
             {/* Error Message */}
             {error && (
               <div className={clsx(
                 "mb-6 p-4 rounded-lg flex items-start",
                 darkMode ? "bg-red-900/30 text-red-300" : "bg-red-50 text-red-600"
               )}
-              role="alert">
+                role="alert">
                 <AlertCircle size={20} className="mr-3 mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>{error}</span>
               </div>
             )}
-            
+
             {/* Login Form */}
             <form onSubmit={handleSubmit}>
               {/* Email Field */}
@@ -194,8 +201,8 @@ const LoginScreen = () => {
                 </label>
                 <div className={clsx(
                   "relative rounded-lg border overflow-hidden flex items-center",
-                  darkMode 
-                    ? "bg-gray-700 border-gray-600 focus-within:border-green-500" 
+                  darkMode
+                    ? "bg-gray-700 border-gray-600 focus-within:border-green-500"
                     : "bg-white border-gray-300 focus-within:border-green-500"
                 )}>
                   <div className={clsx(
@@ -218,15 +225,15 @@ const LoginScreen = () => {
                   />
                 </div>
               </div>
-              
+
               {/* Password Field */}
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-2">
                   <label htmlFor="password" className="block text-sm font-medium">
                     Password
                   </label>
-                  <Link 
-                    href="/forgot-password" 
+                  <Link
+                    href="/forgot-password"
                     className={clsx(
                       "text-xs",
                       darkMode ? "text-green-400 hover:text-green-300" : "text-green-800 hover:text-green-950"
@@ -237,8 +244,8 @@ const LoginScreen = () => {
                 </div>
                 <div className={clsx(
                   "relative rounded-lg border overflow-hidden flex items-center",
-                  darkMode 
-                    ? "bg-gray-700 border-gray-600 focus-within:border-green-500" 
+                  darkMode
+                    ? "bg-gray-700 border-gray-600 focus-within:border-green-500"
                     : "bg-white border-gray-300 focus-within:border-green-500"
                 )}>
                   <div className={clsx(
@@ -259,7 +266,7 @@ const LoginScreen = () => {
                     placeholder="••••••••"
                     required
                   />
-                  <button 
+                  <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className={clsx(
@@ -272,7 +279,7 @@ const LoginScreen = () => {
                   </button>
                 </div>
               </div>
-              
+
               {/* Remember Me */}
               <div className="flex items-center mb-6">
                 <input
@@ -286,7 +293,7 @@ const LoginScreen = () => {
                   Remember me for 30 days
                 </label>
               </div>
-              
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -307,13 +314,13 @@ const LoginScreen = () => {
                 )}
               </button>
             </form>
-            
+
             {/* Sign Up Link */}
             <div className="text-center mt-8">
               <p className="text-sm">
                 Don&rsquo;t have an account?{" "}
-                <Link 
-                  href="/register" 
+                <Link
+                  href="/register"
                   className={clsx(
                     "font-medium",
                     darkMode ? "text-green-400 hover:text-green-300" : "text-green-600 hover:text-green-700"
@@ -326,7 +333,7 @@ const LoginScreen = () => {
           </div>
         </MotionDiv>
       </div>
-      
+
       {/* Footer */}
       <div className={clsx(
         "w-full py-6 px-4 text-center border-t",
