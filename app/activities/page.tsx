@@ -9,6 +9,8 @@ import Header from "@/components/header";
 import { motion } from "framer-motion";
 import axios from "axios";
 import API_ENDPOINT from "@/api_config";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
 
 // TypeScript interfaces
 interface Project {
@@ -82,6 +84,7 @@ export default function ActivitiesPage() {
     const [allActivities, setAllActivities] = useState<FormattedActivity[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     // Format date helper function
     const formatDate = (dateString: string): string => {
@@ -106,11 +109,22 @@ export default function ActivitiesPage() {
     // Fetch activities from API with proper error handling
     useEffect(() => {
         const fetchActivities = async () => {
+            const token = Cookies.get('access_token');
+
+            if (!token) {
+                router.push('/login');
+                return;
+            }
+
             setIsLoading(true);
             setError(null);
 
             try {
-                const response = await axios.get<ActivityResponse[]>(`${API_ENDPOINT}/api/activities/`);
+                const response = await axios.get<ActivityResponse[]>(`${API_ENDPOINT}/api/activities/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -145,8 +159,7 @@ export default function ActivitiesPage() {
         };
 
         fetchActivities();
-    }, []);
-
+    }, [router]);
     // Update filtered activities whenever filters or allActivities change
     useEffect(() => {
         if (allActivities.length > 0) {

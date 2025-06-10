@@ -12,6 +12,9 @@ import Header from "@/components/header";
 import { motion } from "framer-motion";
 import axios from "axios";
 import API_ENDPOINT from "@/api_config";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+
 
 // Project status configuration
 const STATUS_CONFIG = {
@@ -101,6 +104,7 @@ export default function ProjectsPage() {
         loading: true,
         error: null
     });
+    const router = useRouter();
 
     // Filter projects function
     const filterProjects = useCallback((allProjects: Project[], currentFilters: (keyof typeof STATUS_CONFIG)[]) => {
@@ -108,32 +112,45 @@ export default function ProjectsPage() {
     }, []);
 
     // Fetch projects
+
     useEffect(() => {
         const fetchProjects = async () => {
+            const token = Cookies.get('access_token');
+
+            if (!token) {
+                router.push('/login');
+                return;
+            }
+
             try {
-                const response = await axios.get(`${API_ENDPOINT}/api/projects/`);
-                const allProjects: Project[] = response.data;
+                const response = await axios.get(`${API_ENDPOINT}/api/projects/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const allProjects = response.data;
 
                 setProjects(prev => ({
                     ...prev,
                     all: allProjects,
                     filtered: filterProjects(allProjects, filters),
                     loading: false,
-                    error: null
+                    error: null,
                 }));
             } catch (err) {
-                console.error("Error fetching projects:", err);
+                console.error('Error fetching projects:', err);
                 setProjects(prev => ({
                     ...prev,
                     loading: false,
-                    error: "Failed to load projects. Please try again later."
+                    error: 'Failed to load projects. Please try again later.',
                 }));
             }
         };
 
         fetchProjects();
-    }, [filters, filterProjects]);
-
+    }, [filters, filterProjects, router, setProjects]);
+    
     // Update filtered projects when filters change
     useEffect(() => {
         if (projects.all.length === 0) return;

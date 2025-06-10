@@ -8,9 +8,10 @@ import Image from "next/image";
 import Header from "@/components/header";
 import { motion } from "framer-motion";
 import axios from "axios";
-import Cookies from 'js-cookie';
 import API_ENDPOINT from "@/api_config";
 import React from "react";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
 
 // Event status options
 const STATUS_CHOICES = [
@@ -84,6 +85,7 @@ export default function EventsPage() {
     const [allEvents, setAllEvents] = useState<Event[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     // Format date helper function
     const formatDate = (dateString: string | null | undefined): string => {
@@ -101,14 +103,25 @@ export default function EventsPage() {
         });
     };
 
-    // Fetch events from API with proper error handling
+    // Fetch events from API with proper error handling and token authentication
     useEffect(() => {
         const fetchEvents = async () => {
+            const token = Cookies.get('access_token');
+
+            if (!token) {
+                router.push('/login');
+                return;
+            }
+
             setIsLoading(true);
             setError(null);
 
             try {
-                const response = await axios.get<ApiEventResponse[]>(`${API_ENDPOINT}/api/events/`);
+                const response = await axios.get<ApiEventResponse[]>(`${API_ENDPOINT}/api/events/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -140,7 +153,7 @@ export default function EventsPage() {
         };
 
         fetchEvents();
-    }, []);
+    }, [router]);
 
     // Update filtered events whenever filters or allEvents change
     useEffect(() => {
@@ -214,7 +227,7 @@ export default function EventsPage() {
                     window.location.href = "/login?next=" + encodeURIComponent(window.location.pathname);
                     return;
                 }
-                
+
                 const errorData = error.response.data as ApiErrorResponse;
                 const message =
                     errorData?.detail ||
