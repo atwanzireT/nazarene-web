@@ -65,8 +65,8 @@ export default function Page() {
                   ? "bg-green-600 hover:bg-green-500"
                   : "bg-green-700 hover:bg-green-600"
               )}
-              as="https://thenazarenejonahsalumni.live/account-application/create/"
-              href="https://thenazarenejonahsalumni.live/account-application/create/"
+              as="https://thenazarenejonahsalumni.live/accounts/account-application/create/"
+              href="https://thenazarenejonahsalumni.live/accounts/account-application/create/"
               target="_blank"
               rel="noopener noreferrer"
             >
