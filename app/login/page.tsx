@@ -70,7 +70,7 @@ const LoginScreen = () => {
       });
 
       router.push('/');
-    } catch (err) {
+    } catch {
       setError("Invalid email or password. Please try again.");
     } finally {
       setIsLoading(false);
@@ -274,7 +274,7 @@ const LoginScreen = () => {
             {/* Sign Up Link */}
             <div className="text-center mt-8">
               <p className="text-sm">
-                Don't have an account?{" "}
+                Don&#39;t have an account?{" "}
                 <Link
                   href="/register"
                   className={clsx(
